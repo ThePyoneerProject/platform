@@ -2,7 +2,7 @@ services:
   - type: web
     name: django
     runtime: docker
-    repo: https://github.com/scriptogre/the-pyoneers-platform.git
+    repo: https://github.com/ThePyoneerProject/platform.git
     dockerfilePath: ./deployment/production/django/Dockerfile
     dockerCommand: /start
     envVars:
@@ -37,6 +37,7 @@ services:
   - type: worker
     name: celery-worker
     runtime: docker
+    repo: https://github.com/ThePyoneerProject/platform.git
     dockerfilePath: ./deployment/production/django/Dockerfile
     dockerCommand: /start-celeryworker
     autoDeploy: false
@@ -59,6 +60,7 @@ services:
   - type: web
     name: celery-flower
     runtime: docker
+    repo: https://github.com/ThePyoneerProject/platform.git
     dockerfilePath: ./deployment/production/django/Dockerfile
     dockerCommand: /start-flower
     autoDeploy: false
@@ -83,6 +85,7 @@ services:
   - type: worker
     name: celery-beat
     runtime: docker
+    repo: https://github.com/ThePyoneerProject/platform.git
     dockerfilePath: ./deployment/production/django/Dockerfile
     dockerCommand: /start-celerybeat
     autoDeploy: false
