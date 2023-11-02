@@ -27,3 +27,4 @@ openai  # https://github.com/openai/openai-python
 GitPython  # https://github.com/gitpython-developers/GitPython
 markdown2  # https://github.com/trentm/python-markdown2
 loguru  # https://github.com/Delgan/loguru
+pyyaml  # https://github.com/yaml/pyyaml
