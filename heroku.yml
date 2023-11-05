@@ -1,0 +1,15 @@
+setup:
+  addons:
+    - plan: heroku-postgresql
+      as: DATABASE
+    - plan: heroku-redis
+      as: REDIS
+build:
+  docker:
+    django-production:
+      dockerfile: ./deployment/production/django/Dockerfile
+      context: .
+    # DATABASE_URL is automatically provided by Heroku when you provision a Postgres addon
+    # REDIS_URL should be provided by the Redis addon
+run:
+  django-production: ./start
