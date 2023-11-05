@@ -31,7 +31,7 @@ The live platform is accessible at [pyoneers.dev](https://pyoneers.dev).
 
 2. Navigate to the project directory:
     ```bash
-    cd the-pyoneers-platform
+    cd the_pyoneers_platform
     ```
 
 3. Install the required packages:

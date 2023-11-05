@@ -18,9 +18,9 @@ from pathlib import Path
 from django.core.wsgi import get_wsgi_application
 
 # This allows easy placement of apps within the interior
-# the-pyoneers-platform directory.
+# the_pyoneers_platform directory.
 ROOT_DIR = Path(__file__).resolve(strict=True).parent.parent
-sys.path.append(str(ROOT_DIR / "the-pyoneers-platform"))
+sys.path.append(str(ROOT_DIR / "the_pyoneers_platform"))
 
 # We defer to a DJANGO_SETTINGS_MODULE already in the environment. This breaks
 # if running multiple sites in the same mod_wsgi process. To fix this, use
