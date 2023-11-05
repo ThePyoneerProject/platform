@@ -5,11 +5,12 @@ according to the latest content in the repo.
 
 Functions:
     - handle_github_webhook: Authenticates GitHub webhook and triggers content update.
-    - sync_with_github: Updates Chapters and Sections from the repo.
+    - sync_course_with_github: Updates Chapters and Sections from the repo.
 """
 
 import hashlib
 import hmac
+import json
 import os
 
 import git
@@ -27,10 +28,8 @@ from pyoneers_platform.course.models import Chapter, Section
 @csrf_exempt
 def handle_github_webhook(request: HttpRequest) -> JsonResponse | HttpResponseForbidden:
     """
-    Handle incoming GitHub webhooks.
-
-    This function receives GitHub webhook POST requests, validates them,
-    and triggers the fetching and parsing of the repository.
+    Handle incoming GitHub webhooks by syncing the repository when the branch name matches
+    the environment type (staging or production).
 
     Parameters:
         request (HttpRequest): The incoming HTTP request object from Django.
@@ -38,11 +37,6 @@ def handle_github_webhook(request: HttpRequest) -> JsonResponse | HttpResponseFo
     Returns:
         JsonResponse: A JSON object with a 'status' field, indicating success.
         HttpResponseForbidden: 403 status code, indicating authentication failure or invalid method.
-
-    Use Case:
-        Set this up on your server and configure GitHub to ping this URL
-        every time there's a push to your repo. Your Django models get updated
-        according to the latest content in the repo.
     """
 
     def is_valid_signature(request_signature: str, payload: bytes) -> bool:
@@ -51,34 +45,44 @@ def handle_github_webhook(request: HttpRequest) -> JsonResponse | HttpResponseFo
         computed_signature = hmac.new(secret, msg=payload, digestmod=hashlib.sha1).hexdigest()
         return hmac.compare_digest(f"sha1={computed_signature}", request_signature)
 
+    # Ensure POST request
+    if request.method != "POST":
+        return HttpResponseForbidden("Invalid HTTP method.")
+
+    # Validate the signature
     signature = request.headers.get("x-hub-signature")
-
-    if signature is None:
-        return HttpResponseForbidden("Permission denied. No signature found.")
-
-    if not is_valid_signature(signature, request.body):
+    if not signature or not is_valid_signature(signature, request.body):
         return HttpResponseForbidden("Permission denied. Invalid signature.")
 
-    if request.method == "POST":
-        repo_url = "https://github.com/ThePyoneerProject/course"
+    # Get the branch from the payload
+    payload = json.loads(request.body)
+    ref = payload.get('ref')
+    if not ref:
+        return HttpResponseForbidden("No ref found in the payload.")
+
+    branch = ref.split('/')[-1]
+
+    # Check for branch and server type alignment
+    if branch == settings.ENVIRONMENT_TYPE:
         try:
             with transaction.atomic():
-                sync_with_github(repo_url)
-            return JsonResponse({"status": "ok"})
+                sync_course_with_github(repo_url='https://github.com/ThePyoneerProject/course', branch=branch)
+            return JsonResponse({"status": "ok", "branch": branch})
         except Exception as e:
-            return HttpResponseForbidden(f"Permission denied. {e}")
+            return JsonResponse({"status": "failed", "error": str(e)}, status=500)
 
-    return HttpResponseForbidden("Permission denied. Invalid HTTP method.")
+    return JsonResponse({"status": "ignored", "reason": "push event branch does not match the ENVIRONMENT_TYPE"})
 
 
-def sync_with_github(repo_url: str, local_path: str = "/tmp/repo"):
+def sync_course_with_github(repo_url: str = 'https://github.com/ThePyoneerProject/course', branch: str = 'production', local_path: str = "/tmp/repo"):
     """
-    Clone or pull a Git repository and update the Django models based on its content.
+    Clone or pull a Git repository from a specific branch and update the Django models based on its content.
     Also sets the order and title of Chapters and Sections based on the meta.yaml files and Markdown front matter.
 
     Parameters:
         repo_url (str): The URL of the Git repository to clone or pull.
         local_path (str): The local directory where the repository will be cloned or pulled.
+        branch (str): The name of the branch to clone or pull.
 
     Use Case:
         This function keeps the database in sync with the repo.
@@ -86,12 +90,13 @@ def sync_with_github(repo_url: str, local_path: str = "/tmp/repo"):
 
     # Clone or pull the repository to local storage
     if not os.path.exists(local_path):
-        git.Repo.clone_from(repo_url, local_path)
-        logger.debug(f"Cloned repository to {local_path}")
+        git.Repo.clone_from(repo_url, local_path, branch=branch)
+        logger.debug(f"Cloned repository from {branch} to {local_path}")
     else:
         repo = git.Repo(local_path)
-        repo.remotes.origin.pull()
-        logger.debug(f"Updated existing repository at {local_path}")
+        repo.git.checkout(branch)
+        repo.remotes.origin.pull(branch)
+        logger.debug(f"Updated existing repository at {local_path} from branch {branch}")
 
     # List all directory names in the repository, ignoring the .git folder
     chapter_folders = [
