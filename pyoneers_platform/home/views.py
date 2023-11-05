@@ -32,7 +32,7 @@ class HomeView(TemplateView):
         context["first_chapter_url"] = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
 
         if context["is_course_released"] and Chapter.objects.exists():
-            first_chapter = Chapter.objects.first()
+            first_chapter = Chapter.objects.order_by('order').first()
             context["first_chapter_url"] = first_chapter.get_absolute_url()
 
         return context
