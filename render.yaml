@@ -6,7 +6,7 @@ services:
     name: django-production
     runtime: docker
     repo: https://github.com/ThePyoneerProject/platform.git
-    branch: stable
+    branch: production
     dockerfilePath: ./deployment/production/django/Dockerfile
     dockerCommand: /start
     envVars:
@@ -15,6 +15,8 @@ services:
         value: config.settings.production
       - key: DJANGO_SECRET_KEY
         generateValue: true
+      - key: ENVIRONMENT_TYPE
+        value: production
       - key: DJANGO_SUPERUSER_EMAIL
         sync: false
       - key: DJANGO_SUPERUSER_PASSWORD
@@ -123,7 +125,7 @@ services:
     name: django-staging
     runtime: docker
     repo: https://github.com/ThePyoneerProject/platform.git
-    branch: master
+    branch: staging
     dockerfilePath: ./deployment/production/django/Dockerfile
     dockerCommand: /start
     envVars:
@@ -132,8 +134,10 @@ services:
         value: config.settings.production
       - key: DJANGO_SECRET_KEY
         generateValue: true
+      - key: ENVIRONMENT_TYPE
+        value: staging
       - key: DJANGO_ALLOWED_HOSTS
-        value: staging.pyoneers.dev,.staging.pyoneers.dev,.onrender.com
+        value: .pyoneers.dev,.onrender.com
       - key: DATABASE_URL
         fromDatabase:
           name: postgres-staging
