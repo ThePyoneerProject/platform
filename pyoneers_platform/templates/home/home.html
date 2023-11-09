@@ -63,7 +63,7 @@
       </div>
       <a href="{{ first_chapter_url }}"
          class="hover:scale-105 transition-transform ease-in-out duration-500"
-         hx-swap="multi:#content"
+         hx-swap="multi:#content,#navbar"
          preload
          _="on mouseover add .shadow-inner-golden to <body/> end
           on mouseout or htmx:afterOnLoad remove .shadow-inner-golden from <body/> end">
@@ -149,9 +149,9 @@
             sec
           </div>
         </div>
-                   <p class="text-xl mb-3">
-                     <b class="uppercase">Everyone</b> who joins will get the <b class="text-amber-400">Golden Card</b> with free bonuses!
-           </p>
+        <p class="text-xl mb-3">
+          <b class="uppercase">Everyone</b> who joins will get the <b class="text-amber-400">Golden Card</b> with free bonuses!
+        </p>
         <p class="text-lg line-through mb-3">
           First 10 to join get a <b class="text-amber-400">Golden Card</b> with free bonuses.
         </p>
