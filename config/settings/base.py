@@ -186,6 +186,7 @@ TEMPLATES = [
                 "svg": "config.jinja2.render_svg",
                 "avatar_url": "config.jinja2.avatar_url",
                 "user_display": "allauth.account.utils.user_display",
+                "has_provided_feedback": "pyoneers_platform.course.selectors.has_provided_feedback",
             },
             "filters": {
                 "to_roman": "config.jinja2.to_roman",
@@ -234,6 +235,11 @@ MANAGERS = ADMINS
 # https://cookiecutter-django.readthedocs.io/en/latest/settings.html#other-environment-settings
 # Force the `admin` sign in process to go through the `django-allauth` workflow
 DJANGO_ADMIN_FORCE_ALLAUTH = env.bool("DJANGO_ADMIN_FORCE_ALLAUTH", default=False)
+
+# For creating the default superuser
+DJANGO_SUPERUSER_USERNAME = env("DJANGO_SUPERUSER_USERNAME")
+DJANGO_SUPERUSER_EMAIL = env("DJANGO_SUPERUSER_EMAIL")
+DJANGO_SUPERUSER_PASSWORD = env("DJANGO_SUPERUSER_PASSWORD")
 
 # LOGGING
 # ------------------------------------------------------------------------------

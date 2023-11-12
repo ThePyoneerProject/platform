@@ -1,0 +1,17 @@
+{% if not has_provided_feedback(user, section.chapter) %}
+  <button
+    hx-get="{{ url('course:chapter_feedback', chapter_slug=section.chapter.slug) }}"
+    hx-target="body"
+    hx-swap="beforeend"
+    class="btn btn-ghost w-full mt-3">
+    Provide Feedback <span class="ms-1">🎉</span>
+  </button>
+{% else %}
+  <div class="tooltip tooltip-bottom w-full" data-tip="Already submitted feedback for {{ section.chapter.title }}">
+    <button
+      disabled
+      class="btn btn-ghost w-full mt-3">
+      Feedback Submitted <span class="ms-1">✅</span>
+    </button>
+  </div>
+{% endif %}

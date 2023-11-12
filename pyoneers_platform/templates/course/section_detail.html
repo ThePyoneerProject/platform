@@ -26,12 +26,25 @@
   <!-- Sidebar Menu -->
   {% include 'course/partials/_navigation_menu.html' %}
 
-  <div id="desktop-navigation-arrows"
-       class="max-lg:hidden flex justify-between items-center mt-6">
-    {% with classes="btn btn-ghost", include_labels=True %}
-      {% include 'course/partials/_navigation_arrows.html' %}
-    {% endwith %}
+  <div id="desktop-navigation-arrows" class="max-lg:hidden flex flex-col justify-between items-center mt-6">
+    <div class="flex justify-between items-center w-full">
+      {% with classes="btn btn-ghost", label="Previous" %}
+        {% include 'course/partials/_previous_arrow.html' %}
+      {% endwith %}
+      {% with classes="btn btn-ghost", label="Next" %}
+        {% include 'course/partials/_next_arrow.html' %}
+      {% endwith %}
+    </div>
+
+    {% if section.is_last %}
+      {% include 'course/partials/_feedback_button.html' %}
+    {% endif %}
   </div>
+
+  {% if not section.next %}
+    {% if section.chapter.next %}
+    {% endif %}
+  {% endif %}
 
 {% endblock %}
 
@@ -59,6 +72,12 @@
     <!-- Markdown Content -->
     <div id="section-content" class="prose text-base-content lg:min-w-[580px]">
       {{ section.content|safe }}
+
+      <div class="lg:hidden">
+        {% if section.is_last %}
+          {% include 'course/partials/_feedback_button.html' %}
+        {% endif %}
+      </div>
     </div>
   </article>
 
@@ -68,7 +87,13 @@
       {% if section.next %}
        href="{{ section.next.url }}"
       {% elif section.chapter.next %}
+        {% if not has_provided_feedback(user, section.chapter) %}
+       hx-get="{{ url('course:chapter_feedback', chapter_slug=section.chapter.slug) }}"
+       hx-target="body"
+       hx-swap="beforeend"
+        {% else %}
        href="{{ section.chapter.next.url }}"
+        {% endif %}
       {% endif %}
        class="max-lg:hidden hidden btn btn-glassy max-lg:btn-circle !fixed bottom-[9.5rem] right-4 md:right-12 xl:right-24 2xl:right-40 animate-fade-left animate-once animate-ease-in-out animate-duration-500"
        _="on intersection(intersecting) from #footer
@@ -79,6 +104,15 @@
       {{ svg("svg/chevron_right.svg") }}
     </a>
   {% endif %}
+  <div class="max-lg:hidden hidden !fixed bottom-[9.5rem] right-4 md:right-12 xl:right-24 2xl:right-40 animate-fade-left animate-once animate-ease-in-out animate-duration-500"
+       _="on intersection(intersecting) from #footer
+              if intersecting remove .hidden
+              else add .hidden
+          end">
+    {% with classes="btn btn-glassy max-lg:btn-circle", label="Next" %}
+      {% include 'course/partials/_next_arrow.html' %}
+    {% endwith %}
+  </div>
 
   <!-- Back to Top Button -->
   <button id="back-to-top"
@@ -108,7 +142,8 @@
   <div id="bottom-navigation-mobile"
        class="lg:hidden btm-nav btm-nav-sm bg-custom-gradient bg-opacity-50 bg-fixed border-t border-gray-700 border-opacity-80 z-50">
     {% with classes="btn-ghost" %}
-      {% include 'course/partials/_navigation_arrows.html' %}
+      {% include 'course/partials/_previous_arrow.html' %}
+      {% include 'course/partials/_next_arrow.html' %}
     {% endwith %}
   </div>
 {% endblock %}

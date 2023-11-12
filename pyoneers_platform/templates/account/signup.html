@@ -19,9 +19,9 @@
     {# Render any form errors. #}
     {{ render_form_errors(form) }}
     {# Render the form fields. #}
-    {{ render_field(form['email'], class='input input-bordered w-full mb-3', error_class='input-error') }}
-    {{ render_field(form['password1'], class='input input-bordered w-full mb-3', error_class='input-error') }}
-    {{ render_field(form['password2'], class='input input-bordered w-full mb-3', error_class='input-error') }}
+    {{ render_field(form['email'], class='input input-bordered input-ghost w-full mb-4', error_class='input-error') }}
+    {{ render_field(form['password1'], class='input input-bordered input-ghost w-full mb-4', error_class='input-error') }}
+    {{ render_field(form['password2'], class='input input-bordered input-ghost w-full mb-4', error_class='input-error') }}
 
     <div class="flex justify-between align-middle mb-5">
       <a id="already-have-account-link"

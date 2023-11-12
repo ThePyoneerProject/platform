@@ -1,0 +1,19 @@
+<a class="{{ classes }}"
+  {% if section.has_next %}
+   href="{{ section.next.url }}"
+  {% elif section.chapter.has_next %}
+    {% if not has_provided_feedback(user, section.chapter) %}
+       hx-get="{{ url('course:chapter_feedback', chapter_slug=section.chapter.slug) }}"
+       hx-target="body"
+       hx-swap="beforeend"
+    {% else %}
+      href="{{ section.chapter.next.url }}"
+    {% endif %}
+  {% else %}
+   disabled
+  {% endif %}
+   hx-swap="multi:#content,#progress-bar:outerHTML"
+   preload>
+  {{ label if label is defined }}
+  {{ svg('svg/chevron_right.svg', css_classes="w-6 h-6") }}
+</a>
