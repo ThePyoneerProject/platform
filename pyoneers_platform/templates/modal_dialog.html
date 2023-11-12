@@ -21,10 +21,10 @@ Example:
 This setup allows for a dynamic, self-managing modal suitable for various content, without the need for additional JavaScript.
 #}
 
-<dialog id="modal_dialog" class="modal"
+<dialog id="modal_dialog" class="modal backdrop-blur-sm"
         _="init call me.showModal() end
            on close remove me end">
-  <div id="modal-content" class="modal-box">
+  <div id="modal-content" class="modal-box bg-[#161C22] border border-base-100">
     {% block modal_content %}
     {% endblock %}
   </div>

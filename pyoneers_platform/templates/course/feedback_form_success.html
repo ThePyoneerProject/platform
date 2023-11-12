@@ -1,0 +1,32 @@
+{% extends 'modal_dialog.html' %}
+
+{% block modal_content %}
+  <h3 id="feedback-title" class="text-2xl font-bold">
+    Feedback Submitted Successfully <span class="ms-2">🎉</span>
+  </h3>
+
+  <hr class="my-5 border-base-100 border-t-[1px]">
+
+  <p class="mb-3">
+    Your feedback is highly appreciated! 🙏
+  </p>
+
+  <img src="{{ static('img/script-ogre.webp') }}" alt="Script Ogre" class="w-full rounded-lg mb-5">
+
+  {% if chapter.has_next %}
+    <p>
+      I hope you have a blast going through the following chapter!
+    </p>
+
+    <div class="flex justify-end">
+      <a href="{{ chapter.next.url }}" class="btn btn-ghost mt-4">
+        Continue
+        {{ svg('svg/chevron_right.svg', css_classes='w-6 h-6 ms-2') }}
+      </a>
+    </div>
+  {% else %}
+    <p>
+      That's it for now. I'll be adding more chapters soon. Stay tuned!
+    </p>
+  {% endif %}
+{% endblock %}

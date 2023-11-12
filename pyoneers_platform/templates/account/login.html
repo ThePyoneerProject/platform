@@ -1,16 +1,16 @@
 {% extends 'modal_dialog.html' %}
 
 {% block modal_content %}
-  <h3 id="login-title" class="font-bold text-xl">
+  <h3 id="login-title" class="text-xl font-bold">
     Sign in to your account
   </h3>
 
   <form id="login-form"
-        class="pt-6 pb-4"
         hx-post="{{ url("account_login") }}"
         hx-target="body"
         hx-swap="beforeend"
-        {#
+        class="mt-8"
+    {#
           If the login form has errors, HTMX will render them in a new modal dialog.
           Otherwise, if login is successful, hyperscript will reload the page.
         #}
@@ -23,10 +23,10 @@
     {# Render any form errors. #}
     {{ render_form_errors(form) }}
     {# Render the form fields. #}
-    {{ render_field(form['login'], class='input input-bordered w-full mb-3', error_class='input-error') }}
-    {{ render_field(form['password'], class='input input-bordered w-full mb-3', error_class='input-error') }}
+    {{ render_field(form['login'], class='input input-bordered input-ghost w-full mb-4', error_class='input-error') }}
+    {{ render_field(form['password'], class='input input-bordered input-ghost w-full mb-6', error_class='input-error') }}
 
-    <div class="flex justify-between align-middle mt-2 mb-5">
+    <div class="flex justify-between align-middle mb-6">
       <label id="remember-me-label" class="cursor-pointer flex label-text">
         <input id="remember-me-input"
                class="checkbox me-2"

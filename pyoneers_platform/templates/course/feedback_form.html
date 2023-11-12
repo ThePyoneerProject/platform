@@ -1,0 +1,109 @@
+{% extends 'modal_dialog.html' %}
+
+{% block modal_content %}
+  <h3 id="feedback-title" class="text-2xl font-bold">
+    Rate this chapter <span class="ms-2">🎉</span>
+  </h3>
+  <span class="text-sm text-base-content/70">
+    Be brutally honest - I can take it.
+  </span>
+
+  <hr class="my-5 border-base-100 border-t-[1px]">
+
+  <form id="feedback-form"
+        hx-post="{{ url('course:chapter_feedback', chapter_slug=chapter.slug) }}"
+        hx-target="body"
+        hx-swap="beforeend">
+    {% csrf_token %}
+    {% from 'macros.jinja' import render_form_errors %}
+    {# Render any form errors #}
+    {{ render_form_errors(form) }}
+    <div id="simplicity" class="flex justify-between items-center mb-4" oninput="confetti({ particleCount: event.target.value * 20, spread: 360, decay: 0.94, gravity: 0, origin: {x: 0.5, y: 0.5}, shapes:['star'], colors: ['#fb923c']})">
+      <div class="flex flex-col">
+        <span class="text-lg">Simplicity</span>
+        <span class="text-sm text-base-content/70">Was this chapter easy to understand?</span>
+      </div>
+      <div class="rating rating-lg rating-half">
+        <input type="radio" name="simplicity_rating" value="1" class="bg-orange-400 mask mask-star-2 mask-half-1" />
+        <input type="radio" name="simplicity_rating" value="2" class="bg-orange-400 mask mask-star-2 mask-half-2" />
+        <input type="radio" name="simplicity_rating" value="3" class="bg-orange-400 mask mask-star-2 mask-half-1" />
+        <input type="radio" name="simplicity_rating" value="4" class="bg-orange-400 mask mask-star-2 mask-half-2" />
+        <input type="radio" name="simplicity_rating" value="5" class="bg-orange-400 mask mask-star-2 mask-half-1" checked />
+        <input type="radio" name="simplicity_rating" value="6" class="bg-orange-400 mask mask-star-2 mask-half-2" />
+        <input type="radio" name="simplicity_rating" value="7" class="bg-orange-400 mask mask-star-2 mask-half-1" />
+        <input type="radio" name="simplicity_rating" value="8" class="bg-orange-400 mask mask-star-2 mask-half-2" />
+        <input type="radio" name="simplicity_rating" value="9" class="bg-orange-400 mask mask-star-2 mask-half-1" />
+        <input type="radio" name="simplicity_rating" value="10" class="bg-orange-400 mask mask-star-2 mask-half-2" />
+      </div>
+    </div>
+    <div id="practicality" class="flex justify-between items-center mb-4" oninput="confetti({ particleCount: event.target.value * 20, spread: 360, decay: 0.94, gravity: 0, origin: {x: 0.5, y: 0.5}, shapes:['star'], colors: ['#fb923c']})">
+      <div class="flex flex-col">
+        <span class="text-lg">Practicality</span>
+        <span class="text-sm text-base-content/70">Was this chapter useful?</span>
+      </div>
+      <div class="rating rating-lg rating-half">
+        <input type="radio" name="practicality_rating" value="1" class="bg-orange-400 mask mask-star-2 mask-half-1" />
+        <input type="radio" name="practicality_rating" value="2" class="bg-orange-400 mask mask-star-2 mask-half-2" />
+        <input type="radio" name="practicality_rating" value="3" class="bg-orange-400 mask mask-star-2 mask-half-1" />
+        <input type="radio" name="practicality_rating" value="4" class="bg-orange-400 mask mask-star-2 mask-half-2" />
+        <input type="radio" name="practicality_rating" value="5" class="bg-orange-400 mask mask-star-2 mask-half-1" checked />
+        <input type="radio" name="practicality_rating" value="6" class="bg-orange-400 mask mask-star-2 mask-half-2" />
+        <input type="radio" name="practicality_rating" value="7" class="bg-orange-400 mask mask-star-2 mask-half-1" />
+        <input type="radio" name="practicality_rating" value="8" class="bg-orange-400 mask mask-star-2 mask-half-2" />
+        <input type="radio" name="practicality_rating" value="9" class="bg-orange-400 mask mask-star-2 mask-half-1" />
+        <input type="radio" name="practicality_rating" value="10" class="bg-orange-400 mask mask-star-2 mask-half-2" />
+      </div>
+    </div>
+    <div id="engagement" class="flex justify-between items-center mb-8" oninput="confetti({ particleCount: event.target.value * 20, spread: 360, decay: 0.94, gravity: 0, origin: {x: 0.5, y: 0.5}, shapes:['star'], colors: ['#fb923c']})">
+      <div class="flex flex-col">
+        <span class="text-lg">Engagement</span>
+        <span class="text-sm text-base-content/70">Was this chapter interesting?</span>
+      </div>
+      <div class="rating rating-lg rating-half">
+        <input type="radio" name="engagement_rating" value="1" class="bg-orange-400 mask mask-star-2 mask-half-1" />
+        <input type="radio" name="engagement_rating" value="2" class="bg-orange-400 mask mask-star-2 mask-half-2" />
+        <input type="radio" name="engagement_rating" value="3" class="bg-orange-400 mask mask-star-2 mask-half-1" />
+        <input type="radio" name="engagement_rating" value="4" class="bg-orange-400 mask mask-star-2 mask-half-2" />
+        <input type="radio" name="engagement_rating" value="5" class="bg-orange-400 mask mask-star-2 mask-half-1" checked />
+        <input type="radio" name="engagement_rating" value="6" class="bg-orange-400 mask mask-star-2 mask-half-2" />
+        <input type="radio" name="engagement_rating" value="7" class="bg-orange-400 mask mask-star-2 mask-half-1" />
+        <input type="radio" name="engagement_rating" value="8" class="bg-orange-400 mask mask-star-2 mask-half-2" />
+        <input type="radio" name="engagement_rating" value="9" class="bg-orange-400 mask mask-star-2 mask-half-1" />
+        <input type="radio" name="engagement_rating" value="10" class="bg-orange-400 mask mask-star-2 mask-half-2" />
+      </div>
+    </div>
+    <textarea
+      name="feedback"
+      class="textarea textarea-ghost textarea-bordered w-full mb-8"
+      rows="4"
+      placeholder="'The enthusiasm's great, but can you turn it down a notch?' or something 🤔."></textarea>
+  </form>
+
+  <div class="flex justify-between items-center">
+    {% if not user.is_authenticated %}
+      <div class="tooltip tooltip-right" data-tip="Logged-out users are anonymous.">
+    {% endif %}
+    <div class="form-control">
+      <label class="label cursor-pointer">
+        <input form="feedback-form" name="is_anonymous" type="checkbox" class="checkbox" {% if not user.is_authenticated %} checked disabled{% endif %}/>
+        <span class="label-text ms-2">Stay anonymous</span>
+      </label>
+    </div>
+    {% if not user.is_authenticated %}
+      </div>
+    {% endif %}
+    <div class="flex items-center">
+      <div class="tooltip" data-tip=":(">
+        <a href="{{ chapter.next.url }}" class="btn btn-ghost me-2">
+          Skip
+        </a>
+      </div>
+
+      <div class="tooltip" data-tip=":)">
+        <button form="feedback-form" type="submit" class="btn btn-warning">
+          Submit
+        </button>
+      </div>
+    </div>
+  </div>
+{% endblock %}

@@ -1,7 +1,17 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <div class="flex flex-col lg:flex-row items-center justify-center mt-8 sm:mt-16 md:mt-20 lg:mt-24 xl:mt-28">
+  <!-- Announcement bar -->
+  <div class="flex items-center justify-center mt-8 sm:mt-16 md:mt-20 lg:mt-24 xl:mt-28">
+    <a href="{{ first_chapter_url }}" class="inline-flex justify-between items-center py-1 px-1 pr-4 mb-7 text-sm text-base-content bg-base-100/70 backdrop-blur border border-base-100 hover:bg-base-content/10 hover:border-gray-700 rounded-full" role="alert">
+      {#max-lg:hidden btn btn-glassy max-lg:btn-circle !fixed bottom-[9.5rem] right-4 md:right-12 xl:right-24 2xl:right-40 animate-fade-left animate-once animate-ease-in-out animate-duration-500#}
+      <span class="text-xs bg-warning rounded-full text-black px-4 py-1.5 mr-3">New</span> <span class="text-sm font-medium">First module is out! <span class="ms-1">🎉</span></span>
+      <svg class="ml-2 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+
+    </a>
+  </div>
+
+  <div class="flex flex-col lg:flex-row items-center justify-center">
     <div id="hero-section" class="flex flex-col items-center justify-center min-w-[50%] flex-grow lg:h-auto mb-6 sm:mb-0 p-6 text-center prose">
       <div class="flex flex-col items-center sm:flex-row sm:mb-3">
         <img src="{{ static('img/python-logo.webp') }}" alt="Python Logo" class="w-16 h-16 mb-3 m-0 sm:mb-0 sm:me-4">
@@ -32,28 +42,28 @@
     </div>
   </div>
 
-  <a href="#news-section" class="flex flex-col justify-center items-center mt-20 xl:mt-32 animate-bounce">
+  <div _="on click go to #news-section smoothly" class="flex flex-col justify-center items-center mt-20 xl:mt-32 cursor-pointer animate-bounce">
     {% if is_course_released %}
 
-      <h2 class="text-xl md:text-2xl mb-4 md:mb-6">
+      <span class="text-xl md:text-2xl mb-4 md:mb-6">
         Huge news! 🙏
-      </h2>
+      </span>
 
     {% else %}
 
-      <h2 class="text-xl md:text-2xl mb-4 md:mb-6">
+      <span class="text-xl md:text-2xl mb-4 md:mb-6">
         Guess what? 🤔
-      </h2>
+      </span>
 
     {% endif %}
     {{ svg('svg/chevron_down.svg', css_classes='w-5 h-5 md:w-6 md:h-6') }}
-  </a>
+  </div>
 
   <div id="news-section" class="h-screen grid place-content-center text-center py-6">
     {% if is_course_released %}
 
       <h2 class="text-3xl md:text-4xl lg:text-5xl mb-4">
-        The first module is finally here! 🔥
+        The first module is here! 🎉
       </h2>
       <span class="text-lg md:text-xl lg:text-2xl mb-4 lg:mb-8 prose">
         Press the golden card to check it out!
@@ -69,9 +79,6 @@
           on mouseout or htmx:afterOnLoad remove .shadow-inner-golden from <body/> end">
         {% include 'home/partials/_golden_card.html' %}
       </a>
-      <p class="mt-6 md:mt-8 lg:mt-12">
-        <i>Note: It also contains some <b class="text-warning">free bonuses</b>. Don't miss them!</i>
-      </p>
 
     {% else %}
 

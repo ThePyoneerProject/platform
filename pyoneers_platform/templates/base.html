@@ -61,6 +61,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
 
+  {# Canvas Confetti #}
+  <script defer src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.0/dist/confetti.browser.min.js"></script>
+
   {% block extra_css %}
     {# Override this in templates to add extra stylesheets #}
   {% endblock %}
@@ -91,28 +94,28 @@
     <div class="flex justify-end items-center">
       <!-- Discord Members -->
       <div id="discord-members-group"
-           class="avatar-group -space-x-6 me-2 min-w-[80px]"
+           class="{% if not is_home_page %}hidden xs:flex {% endif %}avatar-group -space-x-6 me-2 min-w-[80px]"
            hx-get="{{ url("fetch_discord_members") }}"
            hx-swap="innerHTML"
            hx-trigger="load">
       </div>
       <!-- Discord Invite -->
       <a id="discord-invite-link"
-         class="discord-logo-container btn max-lg:btn-circle btn-ghost hover:bg-[#3a45b7] text-base-content hover:text-white me-2"
+         class="{% if not is_home_page %}hidden xs:flex {% endif %} discord-logo-container btn max-sm:btn-circle btn-ghost hover:bg-[#3a45b7] text-base-content hover:text-white me-2"
          href="https://discord.gg/TSMacaF9SG"
          target="_blank"
          _="init if screen.width < 1024px repeat forever toggle .animated wait 2s">
         <span class="flex justify-center items-center flex-nowrap">
           {% from 'macros.jinja' import discord_animated_svg %}
           {{ discord_animated_svg(size=35) }}
-          <span class="ml-2 hidden lg:flex">Discord Server</span>
+          <span class="ml-2 hidden sm:flex">Discord Server</span>
         </span>
       </a>
       {% if user.is_authenticated %}
         <!-- Logged-in User's Avatar -->
         <div id="user-avatar" class="flex flex-col justify-center items-center">
-          <div id="avatar-wrapper" class="avatar online block mb-1">
-            <div class="rounded-full w-10">
+          <div id="avatar-wrapper" class="avatar online block xs:mb-1">
+            <div class="rounded-full w-9 xs:w-10">
               <a hx-get="{{ url('users:detail', pk=user.pk) }}"
                  hx-target="body"
                  hx-swap="beforeend"

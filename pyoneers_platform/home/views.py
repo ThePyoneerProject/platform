@@ -35,6 +35,8 @@ class HomeView(TemplateView):
             first_chapter = Chapter.objects.order_by('order').first()
             context["first_chapter_url"] = first_chapter.get_absolute_url()
 
+        context['is_home_page'] = True
+        
         return context
 
     def get(self, request, *args, **kwargs):
@@ -121,7 +123,7 @@ def fetch_gigachad_gpt_response(request):
                 {
                     "message": "Sorry, the Giga Chad is busy right now. Try again later.",
                     "img_src": static("img/avatar-10x-giga-chad.webp"),
-                    "side": "start",
+                    "side": "start-django",
                 },
             )
 
@@ -139,7 +141,7 @@ def fetch_gigachad_gpt_response(request):
             {
                 "message": bot_response_text,
                 "img_src": static("img/avatar-10x-giga-chad.webp"),
-                "side": "start",
+                "side": "start-django",
             },
         )
 
