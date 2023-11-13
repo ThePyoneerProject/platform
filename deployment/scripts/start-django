@@ -11,4 +11,9 @@ set +o errexit
 python manage.py createsuperuser --noinput || echo "Warning: Superuser could not be created. It may already exist."
 set -o errexit
 
-exec python manage.py runserver_plus 0.0.0.0:8000
+# Use exec to start the server depending on the environment
+if [ "$BUILD_ENVIRONMENT" == "production" ]; then
+    exec /usr/local/bin/gunicorn config.wsgi --bind 0.0.0.0:6000 --chdir=/app --timeout 600 --log-level debug
+else
+    exec python manage.py runserver_plus 0.0.0.0:8000
+fi

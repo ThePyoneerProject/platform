@@ -336,3 +336,9 @@ pyoneers_platform/media/
 .env
 .envs/*
 !.env/
+
+# Terraform
+.terraform/
+*.tfvars
+*.tfstate
+*.tfstate.backup

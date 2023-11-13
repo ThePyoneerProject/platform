@@ -12,20 +12,16 @@ volumes:
   local_postgres_data: {}
 
 services:
-  django: &django
+  django:
     build:
-      context: .
-      dockerfile : ./deployment/local/django/Dockerfile
+      dockerfile: Dockerfile
+      args:
+        - BUILD_ENVIRONMENT=local
     image: local_django
     container_name: local_django
-    depends_on:
-      - postgres
-      - redis
-      - mailpit
-    volumes:
-      - .:/app:z
     environment:
       <<: *postgres-variables
+      BUILD_ENVIRONMENT: local
       DJANGO_SETTINGS_MODULE: config.settings.local
       DJANGO_SUPERUSER_USERNAME: admin
       DJANGO_SUPERUSER_EMAIL: admin@admin.com
@@ -34,10 +30,16 @@ services:
       REDIS_URL: redis://redis:6379/
     env_file:
       - .env
+    depends_on:
+      - postgres
+      - redis
+      - mailpit
+    volumes:
+      - .:/app:z
     ports:
       - "8000:8000"
     tty: true
-    command: /start
+    command: /start-django
 
   postgres:
     image: postgres

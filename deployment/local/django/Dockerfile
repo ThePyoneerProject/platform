@@ -67,21 +67,21 @@ COPY ./deployment/production/django/entrypoint /entrypoint
 RUN sed -i 's/\r$//g' /entrypoint
 RUN chmod +x /entrypoint
 
-COPY ./deployment/local/django/start /start
-RUN sed -i 's/\r$//g' /start
-RUN chmod +x /start
+COPY ./deployment/local/django/start-django /start-django
+RUN sed -i 's/\r$//g' /start-django
+RUN chmod +x /start-django
 
 COPY ./deployment/local/django/celery/worker/start /start-celeryworker
-RUN sed -i 's/\r$//g' /start-celeryworker
-RUN chmod +x /start-celeryworker
+RUN sed -i 's/\r$//g' /start-django-celeryworker
+RUN chmod +x /start-django-celeryworker
 
 COPY ./deployment/local/django/celery/beat/start /start-celerybeat
-RUN sed -i 's/\r$//g' /start-celerybeat
-RUN chmod +x /start-celerybeat
+RUN sed -i 's/\r$//g' /start-django-celerybeat
+RUN chmod +x /start-django-celerybeat
 
 COPY ./deployment/local/django/celery/flower/start /start-flower
-RUN sed -i 's/\r$//g' /start-flower
-RUN chmod +x /start-flower
+RUN sed -i 's/\r$//g' /start-django-flower
+RUN chmod +x /start-django-flower
 
 # copy application code to WORKDIR
 COPY . ${APP_HOME}

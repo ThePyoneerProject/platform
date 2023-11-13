@@ -21,7 +21,7 @@ env = environ.Env()
 DEBUG = env.bool("DJANGO_DEBUG", False)
 
 # Default to 'STAGING' if ENVIRONMENT_TYPE is not set
-ENVIRONMENT_TYPE = env.str('ENVIRONMENT_TYPE', 'staging')
+ENVIRONMENT_TYPE = env.str("ENVIRONMENT_TYPE", "staging")
 
 # Local time zone. Choices are
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name

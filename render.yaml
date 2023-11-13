@@ -68,7 +68,7 @@ services:
 #    runtime: docker
 #    repo: https://github.com/ThePyoneerProject/platform.git
 #    dockerfilePath: ./deployment/production/django/Dockerfile
-#    dockerCommand: /start-flower
+#    dockerCommand: /start-django-flower
 #    autoDeploy: false
 #    envVars:
 #      - fromGroup: env-group
@@ -93,7 +93,7 @@ services:
 #    runtime: docker
 #    repo: https://github.com/ThePyoneerProject/platform.git
 #    dockerfilePath: ./deployment/production/django/Dockerfile
-#    dockerCommand: /start-celerybeat
+#    dockerCommand: /start-django-celerybeat
 #    autoDeploy: false
 #    envVars:
 #      - fromGroup: env-group
@@ -127,7 +127,7 @@ services:
     repo: https://github.com/ThePyoneerProject/platform.git
     branch: staging
     dockerfilePath: ./deployment/production/django/Dockerfile
-    dockerCommand: /start
+    dockerCommand: /start-django-django
     envVars:
       - fromGroup: env-group
       - key: DJANGO_SETTINGS_MODULE
