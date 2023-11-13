@@ -11,7 +11,6 @@ class ChapterFeedbackAdmin(admin.ModelAdmin):
     list_display = (
         "chapter",
         "user",
-        "is_anonymous",
         "simplicity_rating",
         "practicality_rating",
         "engagement_rating",

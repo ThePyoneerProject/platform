@@ -7,6 +7,7 @@ class ChapterFeedbackForm(forms.ModelForm):
     practicality_rating = forms.IntegerField(error_messages={"required": "Please select a practicality rating"})
     simplicity_rating = forms.IntegerField(error_messages={"required": "Please select a simplicity rating"})
     engagement_rating = forms.IntegerField(error_messages={"required": "Please select an engagement rating"})
+    is_anonymous = forms.BooleanField(required=False)
 
     class Meta:
         model = ChapterFeedback
