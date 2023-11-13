@@ -3,11 +3,11 @@
 {% block content %}
   <!-- Announcement bar -->
   <div class="flex items-center justify-center mt-8 sm:mt-16 md:mt-20 lg:mt-24 xl:mt-28">
-    <a href="{{ first_chapter_url }}" class="inline-flex justify-between items-center py-1 px-1 pr-4 mb-7 text-sm text-base-content bg-base-100/70 backdrop-blur border border-base-100 hover:bg-base-content/10 hover:border-gray-700 rounded-full" role="alert">
-      {#max-lg:hidden btn btn-glassy max-lg:btn-circle !fixed bottom-[9.5rem] right-4 md:right-12 xl:right-24 2xl:right-40 animate-fade-left animate-once animate-ease-in-out animate-duration-500#}
-      <span class="text-xs bg-warning rounded-full text-black px-4 py-1.5 mr-3">New</span> <span class="text-sm font-medium">First module is out! <span class="ms-1">🎉</span></span>
+    <a href="{{ first_chapter_url }}" hx-boost="false" class="inline-flex justify-between items-center py-1 px-1 pr-4 mb-7 text-sm text-base-content bg-base-100/70 backdrop-blur border border-base-100 hover:bg-base-content/10 hover:border-gray-700 rounded-full" role="alert">
+      <span class="text-xs bg-warning rounded-full text-black px-4 py-1.5 mr-3">
+        New</span> <span class="text-sm font-medium">First module is out! <span class="ms-1">🎉</span>
+    </span>
       <svg class="ml-2 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
-
     </a>
   </div>
 
@@ -73,8 +73,7 @@
       </div>
       <a href="{{ first_chapter_url }}"
          class="hover:scale-105 transition-transform ease-in-out duration-500"
-         hx-swap="multi:#content,#navbar"
-         preload
+         hx-boost="false"
          _="on mouseover add .shadow-inner-golden to <body/> end
           on mouseout or htmx:afterOnLoad remove .shadow-inner-golden from <body/> end">
         {% include 'home/partials/_golden_card.html' %}
