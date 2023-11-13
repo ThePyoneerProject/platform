@@ -4,9 +4,6 @@ hiredis  # https://github.com/redis/hiredis-py
 argon2-cffi  # https://github.com/hynek/argon2_cffi
 gunicorn  # https://github.com/benoitc/gunicorn
 psycopg2  # https://github.com/psycopg/psycopg2
-celery  # https://github.com/celery/celery
-django-celery-beat  # https://github.com/celery/django-celery-beat
-flower  # https://github.com/mher/flower
 
 # Django
 # ------------------------------------------------------------------------------
