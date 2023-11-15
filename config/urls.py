@@ -33,8 +33,8 @@ if settings.DEBUG:
         ),
         path("500/", default_views.server_error),
     ]
-    if "debug_toolbar" in settings.INSTALLED_APPS:
-        import debug_toolbar
+    if "silk" in settings.INSTALLED_APPS:
+        urlpatterns += [path("silk/", include("silk.urls", namespace="silk"))]
 
         urlpatterns = [path("__debug__/", include(debug_toolbar.urls))] + urlpatterns
 
