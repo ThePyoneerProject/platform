@@ -1,6 +1,9 @@
 from datetime import datetime
 
 import openai
+from loguru import logger
+from openai import OpenAI
+
 import requests
 from django.http import HttpResponseBadRequest
 from django.shortcuts import render
@@ -32,11 +35,11 @@ class HomeView(TemplateView):
         context["first_chapter_url"] = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
 
         if context["is_course_released"] and Chapter.objects.exists():
-            first_chapter = Chapter.objects.order_by('order').first()
+            first_chapter = Chapter.objects.order_by("order").first()
             context["first_chapter_url"] = first_chapter.get_absolute_url()
 
-        context['is_home_page'] = True
-        
+        context["is_home_page"] = True
+
         return context
 
     def get(self, request, *args, **kwargs):
@@ -111,19 +114,24 @@ def fetch_gigachad_gpt_response(request):
         messages_to_send = [system_message] + request.session["conversation"]
 
         try:
-            response = openai.ChatCompletion.create(
-                model="ft:gpt-3.5-turbo-0613:personal::7teyZSgg",
-                messages=messages_to_send,
-                temperature=1,
+            client = OpenAI()
+            response = client.chat.completions.create(
+                model="ft:gpt-3.5-turbo-0613:personal::7teyZSgg", messages=messages_to_send, temperature=1
             )
-        except openai.error.ServiceUnavailableError:
+        except (
+            openai.BadRequestError,
+            openai.APIConnectionError,
+            openai.APITimeoutError,
+            openai.AuthenticationError,
+        ) as e:
+            logger.error(e)
             return render(
                 request,
                 "home/partials/_chat_message.html",
                 {
                     "message": "Sorry, the Giga Chad is busy right now. Try again later.",
                     "img_src": static("img/avatar-10x-giga-chad.webp"),
-                    "side": "start-django",
+                    "side": "start",
                 },
             )
 
@@ -141,7 +149,7 @@ def fetch_gigachad_gpt_response(request):
             {
                 "message": bot_response_text,
                 "img_src": static("img/avatar-10x-giga-chad.webp"),
-                "side": "start-django",
+                "side": "start",
             },
         )
 
