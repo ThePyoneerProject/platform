@@ -36,10 +36,5 @@ if settings.DEBUG:
     if "silk" in settings.INSTALLED_APPS:
         urlpatterns += [path("silk/", include("silk.urls", namespace="silk"))]
 
-        urlpatterns = [path("__debug__/", include(debug_toolbar.urls))] + urlpatterns
-
-    # TODO: Implement django-browser-reload
-    # if "django_browser_reload" in settings.INSTALLED_APPS:
-    #     urlpatterns = [
-    #         path("__reload__/", include("django_browser_reload.urls"))
-    #     ] + urlpatterns
+    if "django_browser_reload" in settings.INSTALLED_APPS:
+        urlpatterns = [path("__reload__/", include("django_browser_reload.urls"))] + urlpatterns

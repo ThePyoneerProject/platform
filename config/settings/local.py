@@ -41,6 +41,11 @@ INSTALLED_APPS = ["whitenoise.runserver_nostatic"] + INSTALLED_APPS  # noqa F405
 INSTALLED_APPS += ["silk"]  # noqa F405
 MIDDLEWARE += ["silk.middleware.SilkyMiddleware"]  # noqa F405
 
+# django-browser-reload
+# ------------------------------------------------------------------------------
+# https://github.com/adamchainz/django-browser-reload#installation
+INSTALLED_APPS += ["django_browser_reload"]  # noqa: F405
+MIDDLEWARE += ["django_browser_reload.middleware.BrowserReloadMiddleware"]  # noqa: F405
 
 # django-extensions
 # ------------------------------------------------------------------------------
