@@ -8069,6 +8069,14 @@ details.collapse summary::-webkit-details-marker {
   bottom: var(--tooltip-offset);
 }
 
+.tooltip-bottom:before {
+  transform: translateX(-50%);
+  top: var(--tooltip-offset);
+  left: 50%;
+  right: auto;
+  bottom: auto;
+}
+
 .tooltip-right:before {
   transform: translateY(-50%);
   top: 50%;
@@ -8562,6 +8570,15 @@ details.collapse summary::-webkit-details-marker {
   left: 50%;
   right: auto;
   bottom: var(--tooltip-tail-offset);
+}
+
+.tooltip-bottom:after {
+  transform: translateX(-50%);
+  border-color: transparent transparent var(--tooltip-color) transparent;
+  top: var(--tooltip-tail-offset);
+  left: 50%;
+  right: auto;
+  bottom: auto;
 }
 
 .tooltip-right:after {
@@ -9068,10 +9085,6 @@ details.collapse summary::-webkit-details-marker {
   height: 6rem;
 }
 
-.h-32 {
-  height: 8rem;
-}
-
 .h-5 {
   height: 1.25rem;
 }
@@ -9121,10 +9134,6 @@ details.collapse summary::-webkit-details-marker {
   width: 6rem;
 }
 
-.w-32 {
-  width: 8rem;
-}
-
 .w-5 {
   width: 1.25rem;
 }
@@ -9152,10 +9161,6 @@ details.collapse summary::-webkit-details-marker {
 .w-max {
   width: -moz-max-content;
   width: max-content;
-}
-
-.w-12 {
-  width: 3rem;
 }
 
 .min-w-\[50\%\] {

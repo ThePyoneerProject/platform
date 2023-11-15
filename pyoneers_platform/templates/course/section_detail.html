@@ -26,14 +26,19 @@
   <!-- Sidebar Menu -->
   {% include 'course/partials/_navigation_menu.html' %}
 
-  <div id="desktop-navigation-arrows"
-       class="max-lg:hidden flex justify-between items-center mt-6">
-    {% with classes="btn btn-ghost", label="Previous" %}
-      {% include 'course/partials/_previous_arrow.html' %}
-    {% endwith %}
-    {% with classes="btn btn-ghost", label="Next" %}
-      {% include 'course/partials/_next_arrow.html' %}
-    {% endwith %}
+  <div id="desktop-navigation-arrows" class="max-lg:hidden flex flex-col justify-between items-center mt-6">
+    <div class="flex justify-between items-center w-full">
+      {% with classes="btn btn-ghost", label="Previous" %}
+        {% include 'course/partials/_previous_arrow.html' %}
+      {% endwith %}
+      {% with classes="btn btn-ghost", label="Next" %}
+        {% include 'course/partials/_next_arrow.html' %}
+      {% endwith %}
+    </div>
+
+    {% if section.is_last %}
+      {% include 'course/partials/_feedback_button.html' %}
+    {% endif %}
   </div>
 
   {% if not section.next %}
@@ -67,6 +72,12 @@
     <!-- Markdown Content -->
     <div id="section-content" class="prose text-base-content lg:min-w-[580px]">
       {{ section.content|safe }}
+
+      <div class="lg:hidden">
+        {% if section.is_last %}
+          {% include 'course/partials/_feedback_button.html' %}
+        {% endif %}
+      </div>
     </div>
   </article>
 

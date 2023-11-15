@@ -39,12 +39,13 @@ def chapter_feedback_view(request, chapter_slug: str) -> HttpResponse:
     context = {
         "chapter": chapter,
     }
+
     if not request.htmx:
         return redirect("course:chapter", chapter_slug=chapter.slug)
 
     if request.method == "POST":
         form = ChapterFeedbackForm(
-            request.POST, initial={"chapter": chapter, "user": request.user if request.user.is_authenticated else None}
+            request.POST, user=request.user if request.user.is_authenticated else None, chapter=chapter
         )
         if form.is_valid():
             feedback = form.save()

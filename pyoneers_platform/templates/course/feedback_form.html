@@ -24,11 +24,12 @@
         <span class="text-sm text-base-content/70">Was this chapter easy to understand?</span>
       </div>
       <div class="rating rating-lg rating-half">
+        <input type="radio" name="simplicity_rating" class="rating-hidden" checked />
         <input type="radio" name="simplicity_rating" value="1" class="bg-orange-400 mask mask-star-2 mask-half-1" />
         <input type="radio" name="simplicity_rating" value="2" class="bg-orange-400 mask mask-star-2 mask-half-2" />
         <input type="radio" name="simplicity_rating" value="3" class="bg-orange-400 mask mask-star-2 mask-half-1" />
         <input type="radio" name="simplicity_rating" value="4" class="bg-orange-400 mask mask-star-2 mask-half-2" />
-        <input type="radio" name="simplicity_rating" value="5" class="bg-orange-400 mask mask-star-2 mask-half-1" checked />
+        <input type="radio" name="simplicity_rating" value="5" class="bg-orange-400 mask mask-star-2 mask-half-1" />
         <input type="radio" name="simplicity_rating" value="6" class="bg-orange-400 mask mask-star-2 mask-half-2" />
         <input type="radio" name="simplicity_rating" value="7" class="bg-orange-400 mask mask-star-2 mask-half-1" />
         <input type="radio" name="simplicity_rating" value="8" class="bg-orange-400 mask mask-star-2 mask-half-2" />
@@ -42,11 +43,12 @@
         <span class="text-sm text-base-content/70">Was this chapter useful?</span>
       </div>
       <div class="rating rating-lg rating-half">
+        <input type="radio" name="practicality_rating" class="rating-hidden" checked />
         <input type="radio" name="practicality_rating" value="1" class="bg-orange-400 mask mask-star-2 mask-half-1" />
         <input type="radio" name="practicality_rating" value="2" class="bg-orange-400 mask mask-star-2 mask-half-2" />
         <input type="radio" name="practicality_rating" value="3" class="bg-orange-400 mask mask-star-2 mask-half-1" />
         <input type="radio" name="practicality_rating" value="4" class="bg-orange-400 mask mask-star-2 mask-half-2" />
-        <input type="radio" name="practicality_rating" value="5" class="bg-orange-400 mask mask-star-2 mask-half-1" checked />
+        <input type="radio" name="practicality_rating" value="5" class="bg-orange-400 mask mask-star-2 mask-half-1" />
         <input type="radio" name="practicality_rating" value="6" class="bg-orange-400 mask mask-star-2 mask-half-2" />
         <input type="radio" name="practicality_rating" value="7" class="bg-orange-400 mask mask-star-2 mask-half-1" />
         <input type="radio" name="practicality_rating" value="8" class="bg-orange-400 mask mask-star-2 mask-half-2" />
@@ -60,11 +62,12 @@
         <span class="text-sm text-base-content/70">Was this chapter interesting?</span>
       </div>
       <div class="rating rating-lg rating-half">
+        <input type="radio" name="engagement_rating" class="rating-hidden" checked />
         <input type="radio" name="engagement_rating" value="1" class="bg-orange-400 mask mask-star-2 mask-half-1" />
         <input type="radio" name="engagement_rating" value="2" class="bg-orange-400 mask mask-star-2 mask-half-2" />
         <input type="radio" name="engagement_rating" value="3" class="bg-orange-400 mask mask-star-2 mask-half-1" />
         <input type="radio" name="engagement_rating" value="4" class="bg-orange-400 mask mask-star-2 mask-half-2" />
-        <input type="radio" name="engagement_rating" value="5" class="bg-orange-400 mask mask-star-2 mask-half-1" checked />
+        <input type="radio" name="engagement_rating" value="5" class="bg-orange-400 mask mask-star-2 mask-half-1" />
         <input type="radio" name="engagement_rating" value="6" class="bg-orange-400 mask mask-star-2 mask-half-2" />
         <input type="radio" name="engagement_rating" value="7" class="bg-orange-400 mask mask-star-2 mask-half-1" />
         <input type="radio" name="engagement_rating" value="8" class="bg-orange-400 mask mask-star-2 mask-half-2" />
@@ -93,11 +96,14 @@
       </div>
     {% endif %}
     <div class="flex items-center">
-      <div class="tooltip" data-tip=":(">
-        <a href="{{ chapter.next.url }}" class="btn btn-ghost me-2">
-          Skip
-        </a>
-      </div>
+      {% if chapter.has_next %}
+        <div class="tooltip" data-tip=":(">
+          <a href="{{ chapter.next.url }}"
+             class="btn btn-ghost me-2">
+            Skip
+          </a>
+        </div>
+      {% endif %}
 
       <div class="tooltip" data-tip=":)">
         <button form="feedback-form" type="submit" class="btn btn-warning">
@@ -106,4 +112,6 @@
       </div>
     </div>
   </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.0/dist/confetti.browser.min.js"></script>
 {% endblock %}

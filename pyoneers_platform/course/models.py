@@ -119,7 +119,6 @@ class ChapterFeedback(models.Model):
     user = models.ForeignKey(
         User, related_name="chapter_feedback", on_delete=models.CASCADE, verbose_name="User", blank=True, null=True
     )
-    is_anonymous = models.BooleanField(verbose_name="Anonymous", default=False, blank=True)
 
     simplicity_rating = models.IntegerField(
         verbose_name="Simplicity", validators=[MinValueValidator(1), MaxValueValidator(10)]
@@ -133,6 +132,11 @@ class ChapterFeedback(models.Model):
     feedback = models.TextField(verbose_name="Feedback", blank=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
+
+    @property
+    def is_anonymous(self):
+        """Returns True if the feedback is anonymous."""
+        return self.user is None
 
     @property
     def overall_rating(self):
