@@ -1,0 +1,20 @@
+#!/bin/bash
+
+set -o errexit
+set -o pipefail
+set -o nounset
+
+python manage.py migrate
+python manage.py collectstatic --noinput
+python manage.py setup_social_apps
+# Temporarily turn off 'errexit' for the createsuperuser command
+set +o errexit
+python manage.py createsuperuser --noinput || echo "Warning: Superuser could not be created. It may already exist."
+set -o errexit
+
+# Use exec to start the server depending on the environment
+if [ "$BUILD_ENVIRONMENT" == "production" ]; then
+    exec /usr/local/bin/gunicorn config.wsgi --bind 0.0.0.0:"${PORT}" --chdir=/app --timeout 600 --log-level debug
+else
+    exec python manage.py runserver_plus 0.0.0.0:8000
+fi

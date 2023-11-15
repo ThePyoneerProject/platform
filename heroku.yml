@@ -1,10 +1,5 @@
 build:
   docker:
-    django: Dockerfile
-    target: production
+    web: ./app/Dockerfile
   config:
     BUILD_ENVIRONMENT: production
-run:
-  django: ./start-django
-envs:
-
