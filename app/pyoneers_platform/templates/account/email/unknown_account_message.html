@@ -1,0 +1,13 @@
+{% extends "base_email.html" %}
+
+{% block heading %}
+  {% include "account/email/unknown_account_subject.txt" %}
+{% endblock %}
+
+{% block content %}
+  <p>You are receiving this email because you or someone else has requested a
+    password for your user account. However, we do not have any record of a user
+    with email {{ email }} in our database.</p>
+  <p>This mail can be safely ignored if you did not request a password reset.</p>
+  <p>If it was you, you can <a href="{{ signup_url }}">sign up for an account here</a>.</p>
+{% endblock content %}
