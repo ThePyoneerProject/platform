@@ -96,7 +96,7 @@
     <div class="flex justify-end items-center">
       <!-- Discord Members -->
       <div id="discord-members-group"
-           class="{% if not is_home_page %}hidden xs:flex {% endif %}avatar-group -space-x-6 me-2 min-w-[80px]"
+           class="hidden xs:flex avatar-group -space-x-6 me-2 min-w-[80px]"
            hx-get="{{ url("fetch_discord_members") }}"
            hx-swap="innerHTML"
            hx-trigger="load">
